@@ -1,16 +1,26 @@
-class Bank_Account
+# require_relative 'transaction'
 
-  attr_reader :balance, :deposit, :withdraw
+class Bank_Account
+  
+  attr_reader :balance, :credit, :debit
+
+  DEFAULT_BALANCE = 0
   
   def initialize
-  @balance = 0
-    end
+  @balance = DEFAULT_BALANCE
+  @transaction = []
+  @date = Time.now.strftime("%d/%m/%Y")
+   end
     
-    def deposit(credit)
-    @balance += credit
+    def credit(deposit)
+      raise 'Cannot deposit negative amount' if deposit < 0
+    @balance += deposit
+    @transaction.push(deposit)
     end
 
-  def withdraw(debit)
-    @balance -= debit
+  def debit(withdrawal)
+    raise 'Cannot withdraw negative amount' if withdrawal < 0
+    @balance -= withdrawal
+    @transaction.push(withdrawal)
     end
 end
